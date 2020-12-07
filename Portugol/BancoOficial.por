@@ -7,14 +7,15 @@ programa
 		inteiro transacao[MOVIMENTO],dataAniversario, dataAniversarioDigitada
 		cadeia numeroConta = "G2Bank", cpf = "436.164.598-18"
 		real saldo=0.0,debito,credito, 
-		inteiro acessaTransacao, numeroTalao=510 , alteraNumero=520
+		inteiro acessaTransacao
+		real numeroTalao=51.0 , alteraNumero=52.0
 		
 
 
 		para (inteiro x = 0; x < MOVIMENTO; x++ ){
 			escreva ("\nConta: ",numeroConta)
 			escreva("\nCPF: ",cpf,"\n")
-			escreva("\nDigite umas das opções:5  ")
+			escreva("\nDigite umas das opções:  ")
 			escreva("\n1 - Crédito ")
 			escreva("\n2 - Débito ")
 			escreva("\n3 - Saldo "))
@@ -38,9 +39,11 @@ programa
 				escreva("\nSaldo em conta:",saldo,"\n")
 			} senao se (acessaTransacao ==4){
 				escreva("solicitar um novo talão, numero do talão é: ", numeroTalao)
+				leia(numeroTalao)
+				
 			} senao se(acessaTransacao==5){ 
 				escreva ("Número Alterado para: ", alteraNumero)
-				
+				leia(alteraNumero)
 			}
 				
 		}limpa()
@@ -50,13 +53,12 @@ programa
 		escreva("\nSaldo restante no final das transações: R$",saldo,"\n")
 	}
 }
-	
 /* $$$ Portugol Studio $$$ 
  * 
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 336; 
+ * @POSICAO-CURSOR = 1336; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
