@@ -31,6 +31,7 @@ public class BancoTeste {
 		*/
 		contapobre.credito(300);
 		contapop.credito(100);
+		contapop.correcaoPoupanca(25);
 		
 		System.out.println("numero da conta: "+contapop.getNumeroConta()+" Saldo atual: "+contapop.getSaldo());
 		System.out.println("Conta de pobre, qual o saldo: "+contapobre.getSaldo());
