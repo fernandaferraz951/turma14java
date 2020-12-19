@@ -1,26 +1,23 @@
 package bancooficial;
 
-public class ContaUniversitaria extends ContaEspecial
-{
-	private double emprestimoUniversitario;
+public class ContaUniversitaria extends ContaEspecial {
 
+	private double emprestimoUniversitario;
 	
-	//construtor
-	public ContaUniversitaria(int numeroConta, double valorLimite, double emprestimoUniversitario) {
-		super(numeroConta, valorLimite);
+	
+
+	public ContaUniversitaria(int numeroConta, String CPF, double valorLimite, double emprestimoUniversitario) {
+		super (numeroConta, CPF, valorLimite);
 		this.emprestimoUniversitario = emprestimoUniversitario;
 	}
 
-	//encapsulamento - getters and setters
-	
 	public double getEmprestimoUniversitario() {
 		return emprestimoUniversitario;
 	}
 
 	public void setEmprestimoUniversitario(double emprestimoUniversitario) {
 		this.emprestimoUniversitario = emprestimoUniversitario;
-	}
-	
+	} 
 	
 	
 }

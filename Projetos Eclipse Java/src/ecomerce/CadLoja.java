@@ -1,4 +1,4 @@
-package exemplos;
+package ecomerce;
 import java.util.Scanner;
 public class CadLoja {
 	public static void main(String[] args)

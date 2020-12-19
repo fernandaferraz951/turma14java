@@ -3,20 +3,13 @@ public abstract class Conta
 {
 	
 	//ATRIBUTOS
-	protected int numeroConta; //tem
-	protected double saldo; //tem
-	protected String cpf; //tem
+	private int numeroConta;//tem
+	private double saldo;//tem
+	private String cpf;//tem
 	
 	
 	//CONSTRUTORES - REGRA DE CRIAÇÃO DA CLASSE
 	//PEDREIRO E PEÃO DE OBRA
-	
-	/*
-	public Conta() //CONSTRUTOR PADRÃO - BÁSICO - MINIMO //CONSTRUTOR TEM O MESMO NOME DA CLASSE
-	{
-		
-	}
-	*/
 	
 	// *SOBRECARGA //A MESMA COISA DE UM JEITO DIFERENTE
 	public Conta(int numeroConta) 
@@ -51,33 +44,38 @@ public abstract class Conta
 
 	
 	
-	//METODOS
-	public void debito(double valorDebito) 
-	{
-		this.saldo = this.saldo - valorDebito;
+	//METODOS PROPRIOS
+	
+	
+	public void credito (double valorCredito) {
+		this.saldo = this.saldo + valorCredito;
+	}
+	
+	
+	public void debito(double valorDebito) {
+		if (testarSaldo(valorDebito))  {
+			this.saldo = this.saldo - valorDebito;
+		} 
+		else{
+			System.out.println("SALDO INDISPONIVEL");
+		}
+		
 		
 	}
 	
 	
 	
-	public void credito (double valorCredito) 
-	{
-		this.saldo = this.saldo + valorCredito;
+	public boolean testarSaldo(double valor) {
+		
+		boolean teste;
+		if (valor <= this.saldo) {
+			teste = true;
+		} else {
+			teste = false;
+		}
+		
+		return teste;
 	}
 	
-	
-	public void pixDebito(double valorDebitoPix )
-	{
-		this.saldo = this.saldo - valorDebitoPix;
-	}
-	
-	public void pixCredito(double valorCreditoPix )
-	{
-		this.saldo = this.saldo - valorCreditoPix;
-	}
-	
-	public void trocarNumero(int novoNumero) {
-		this.numeroConta = novoNumero;
-	}
 	
 }
