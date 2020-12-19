@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import LojaExemplo.Produtos;
+
 public class CadLoja {
-	public static void main (String [] args, Object produto) {
+	public static void main (String [] args) {
 		Scanner leia =new Scanner (System.in);
 		char opcao ='S';
 		char continua ='S';
@@ -16,18 +18,22 @@ public class CadLoja {
 		double total =0;
 		String codigo;
 		final int ESTOQUE=10;
+		char op;
 		
-		List<Produto>produtos =new ArrayList<>();
-		produtos.add(new Produto("C001", "Kong", 23.00, "10"));
-		produtos.add(new Produto("C002", "Guia Azul", 12.00, "10"));
-		produtos.add(new Produto("C003" , "Guia Rosa", 13.00, "10"));
-		produtos.add(new Produto("C004", "Comedouro com Peso", 20.00, "10"));
-		produtos.add(new Produto("C005" , "Bolinha", 2.00, "10"));
-		produtos.add(new Produto("C006", "Caixa de Areia", 10.00, "10"));
-		produtos.add(new Produto("0007", "Roupinha de natal tamanho G", 45.00, "10"));
-		produtos.add(new Produto("0008", "Casco de boi", 10.00, "10"));
-		produtos.add(new Produto("0009", "Comedouro interativo", 12.00, "10"));
-		produtos.add(new Produto("0010", "Cama com colchão", 35.00, "10"));
+		
+		List<Produtos> produtos = new ArrayList<>();
+		produtos.add(new Produtos("C001", "Kong", 23.00, 10));
+		produtos.add(new Produtos("C002", "Guia Azul", 12.00, 10));
+		produtos.add(new Produtos("C003", "Guia Rosa", 13.00, 10));
+		produtos.add(new Produtos("C004", "Comedouro com Peso", 20.00, 10));
+		produtos.add(new Produtos("C005", "Bolinha", 2.00, 10));
+		produtos.add(new Produtos("C006", "Caixa de Areia", 10.00, 10));
+		produtos.add(new Produtos("C007", "Roupinha de natal tamanho G", 45.00, 10));
+		produtos.add(new Produtos("C008", "Casco de boi", 12.00, 10));
+		produtos.add(new Produtos("C009", "Cama com colchão", 35, 10));
+		produtos.add(new Produtos("C010", "Comedouro interativo", 12.00, 10));
+
+		
 		
 		
 		
@@ -77,7 +83,7 @@ public class CadLoja {
 				System.out.println("Digite o número do seu CPF");
 				String cpf=leia.next();
 				
-				Cliente cliente =new Cliente(nome, genero, anoNascimento, cpf);
+				cliente cliente =new cliente(nome, genero, anoNascimento, cpf);
 				
 				if (cliente.getGenero() =='M') {
 					System.out.println("\n Seja Bem-Vindo SR" + cliente.getNome());
@@ -88,11 +94,10 @@ public class CadLoja {
 				}
 				
 				
-			}
-			for (Produto produto : produtos) {
-				System.out.println(produto.getCodigo()+"\t"+ produto.getQtdeProduto()+"\t\t"+produto.getValorUnitario() +"\t\t"+ produto.getNomeProduto());
-				
-				
+			
+			for (Produtos produto : produtos) {
+				System.out.println(produto.getCodigo() + "\t  " + produto.getQuantidadeEstoque() + "\t\t "
+						+ produto.getPreco() + "\t\t" + produto.getNome());
 			}
 			int i=1;
 			while(i>10 || opcao == 'S') {
@@ -103,13 +108,13 @@ public class CadLoja {
 			quantidade = leia.nextInt();
 			
 			
-			for (Produto produto : produtos) {
+			for (Produtos produto : produtos) {
 				if(codigo.equals(produto.getCodigo())) {
 					total =total +produto.comprarProduto(quantidade);
 				}
 				
 			}
-			
+				
 			System.out.println("Deseja continuar comprando? ");
 			opcao=leia.next().toUpperCase().charAt(0);
 			while(opcao != 'S' && opcao != 'N') {
@@ -123,69 +128,65 @@ public class CadLoja {
 			System.out.println("Nota");
 			
 			
-			for (Produto produto : produtos) {
-				if(produto.getQtdeProduto()!=10) {
+			for (Produtos produto : produtos) {
+				if(produto.getQuantidadeEstoque() != 10) {
 				System.out.println(produto.getCodigo() + "\t  " + quantidade + "\t\t "
-						+ produto.getValorUnitario()+ "\t\t" + produto.getNomeProduto());
+						+ produto.getPreco() + "\t\t" + produto.getNome());
 				}
 			}
 			
-				System.out.println("\n O total a ser pago é :" + total +"reais");
-	
 			
+			System.out.println("\nO TOTAL A SER PAGO É: R$" + total);
+			}
+		
 				 if (tipo =='2') {
 
 		do {
-			System.out.println("[1] - ADICIONAR PRODUTO");
-			System.out.println("[2] - REMOVER PRODUTO");
-			System.out.println("[3] - ATUALIZAR PRODUTO");
-			System.out.println("[4] - LISTA DE PRODUTOS");
-			System.out.println("[5] - MENU");
-			opcao =leia.next().charAt(0);
+			System.out.println("[1] - Adicionar o Produto");
+			System.out.println("[2] - Remover o produto");
+			System.out.println("[3] - Atualizar produtos");
+			System.out.println("[4] - Lista de Produtos");
+			System.out.println("[5] - Menu");
+			op =leia.next().charAt(0);
 
-			while (opcao !='1' && opcao != '2' && opcao != '3' && opcao!='4') {
-				System.out.println("ESCOLHA UMA OPÇÃO CORRETA");
-				System.out.print("DIGITE A OPÇÃO:");
-				opcao =leia.next().charAt(0);
+			while (op !='1' && op != '2' && op != '3' && op!='4') {
+				System.out.println("Escolha uma opção valida");
+				System.out.print("Digite a opção:");
+				op =leia.next().charAt(0);
 			}
 
-			if (opcao =='1') {
+			if (op =='1') {
 				
 				System.out.print("COD\tESTOQUE\t\tPREÇO\t\tNOME\n");
-			;
-				for (Produto produto : produtos) {
-					System.out.println(produto.getCodigo() + "\t  " + produto.getQtdeProduto() +"\t\t"
-							+ produto.getValorUnitario() + "\t\t" + produto.getNomeProduto());
+			
+				for(Produtos prod: produtos) {
+					System.out.println(prod.getNome() + "\t  " + prod.getPreco());
 				}
 				
-				leia.nextLine();
-				System.out.println("Digite um código de um produto existente");
-				String codigo = leia.next();
-				System.out.println("DIGITE O NOME DO PRODUTO QUE DESEJA ADICIONAR");
-				String nome = leia.nextLine();
-				System.out.println("DIGITE O PREÇO DO PRODUTO");
-				preco =leia.nextInt(0);
-				Produto produtos =new Produto(codigo, nome, preco, quantidade);
+			
+				System.out.println("Digite o código do produto que gostaria de adcionar");
+				String nome = leia.next();
+				System.out.println("Digite o preço do produto");
+				preco = leia.nextDouble();
+				Produtos produto = new Produtos(nome, preco);
 				produtos.add(produto);
-				
 				
 
 			} else if (op == '2') {
 				linha(60);
 				System.out.print("COD\tESTOQUE\t\tPREÇO\t\tNOME\n");
 				linha(60);
-				for (Produtos produto : produtos) {
-					System.out.println(produto.getCodigo() + "\t  " + produto.getQuantidadeEstoque() + "\t\t "
-							+ produto.getPreco() + "\t\t" + produto.getNome());
+				for(Produtos prod: produtos) {
+					System.out.println(prod.getNome() + "\t  " + prod.getPreco());
 				}
-				t.nextLine();
-				System.out.println("DIGITE O CODIGO DO PRODUTO PARA REMOVER");
-				String codigo = t.nextLine();
+
+				System.out.println("DIGITE O NOME DO PRODUTO QUE DESEJA REMOVER");
+				String nome = leia.next();
 
 				
-				for (Produtos produto : produtos) {
-					if (produto.getCodigo().equals(codigo)) {
-						produtos.indexOf(codigo);
+				for (Produtos prod : produtos) {
+					if (prod.getNome().equals(nome)) {
+						produtos.remove(prod);
 					}
 				}
 				
@@ -200,9 +201,9 @@ public class CadLoja {
 				}
 				
 				System.out.println("DIGITE O NOME DO PRODUTO QUE DESEJA ATUALIZAR");
-				String nome = t.next();
+				String nome = leia.next();
 				System.out.println("DIGITE O NOVO NOME DO PRODUTO");
-				String nomeNovo = t.next();
+				String nomeNovo = leia.next();
 				
 				Produtos produto = new Produtos(nome);
 
@@ -223,11 +224,11 @@ public class CadLoja {
 
 			}					
 			System.out.println("\n\nDESEJA FAZER OUTRA AÇÃO? S/N");
-			continua = t.next().toUpperCase().charAt(0);
+			continua = leia.next().toUpperCase().charAt(0);
 			while(continua != 'S' && continua != 'N') {
 				System.out.println("Digite uma opção válida");
 				System.out.println("[S]-SIM [N]-NÃO");
-				continua = t.next().toUpperCase().charAt(0);
+				continua = leia.next().toUpperCase().charAt(0);
 			}
 
 		
@@ -235,68 +236,43 @@ public class CadLoja {
 		
 	}
 	
+				 else if (tipo == '3') {
 
-	else if (tipo == '3') {
+						System.out.println("OBRIGADO POR VISITAR A OUTLET DO DRÉZÃO");
+						
 
-		System.out.println("OBRIGADO POR VISITAR A OUTLET DO DRÉZÃO");
-		break;
+					} else {
+						System.out.println("Digite uma opção válida");
+					}
 
-	} else {
-		System.out.println("Digite uma opção válida");
+					System.out.print("Deseja continuar comprando??\n\n[S]-Sim [N]-Não\n");
+					opcao = leia.next().toUpperCase().charAt(0);
+					while (opcao != 'S' && opcao != 'N') {
+						System.out.println("Digite uma opção válida");
+						System.out.println("[S]-SIM [N]-NÃO");
+						opcao = leia.next().toUpperCase().charAt(0);
+					}
+					// cabeçalho menu de produtos
+					linha(60);
+					System.out.print("COD\tESTOQUE\t\tPREÇO\t\tNOME\n");
+					linha(60);
+
+					for (Produtos produto : produtos) {
+						System.out.println(produto.getCodigo() + "\t  " + produto.getQuantidadeEstoque() + "\t\t "
+								+ produto.getPreco() + "\t\t" + produto.getNome());
+				}
+	
+
+	System.out.println("PROGRAMA FINALIZADO!!");
+
 	}
 
-	System.out.print("Deseja continuar no programa??\n\n[S]-Sim [N]-Não\n");
-	opcao = t.next().toUpperCase().charAt(0);
-	while (opcao != 'S' && opcao != 'N') {
-		System.out.println("Digite uma opção válida");
-		System.out.println("[S]-SIM [N]-NÃO");
-		opcao = t.next().toUpperCase().charAt(0);
-	}
-	// cabeçalho menu de produtos
-	linha(60);
-	System.out.print("COD\tESTOQUE\t\tPREÇO\t\tNOME\n");
-	linha(60);
-
-	for (Produtos produto : produtos) {
-		System.out.println(produto.getCodigo() + "\t  " + produto.getQuantidadeEstoque() + "\t\t "
-				+ produto.getPreco() + "\t\t" + produto.getNome());
-	}
-} while (opcao == 'S');
-
-System.out.println("PROGRAMA FINALIZADO!!");
-
-
+	public static void linha(int tamanho) {
+						for (int i = 0; i < tamanho; i++) {
+							System.out.print("═");
+						}
+						System.out.print("\n");
+					}
 }
-
-public static void linha(int tamanho) {
-for (int i = 0; i < tamanho; i++) {
-	System.out.print("═");
-}
-System.out.print("\n");
-}
-}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-		
-	}
 
 

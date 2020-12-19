@@ -1,23 +1,25 @@
 package Objetos;
 
-public class Cliente extends Pessoa{
-	
-	private String CPF;
+import LojaExemplo.Pessoa;
 
-	public String getCPF() {
-		return CPF;
-	}
+public class cliente extends pessoa{
 
-	
-	public Cliente(String nome, char genero, int anoNascimento, String cPF) {
-		super(nome, genero, anoNascimento);
-		CPF = cPF;
-	}
+    private String CPF;
+
+    public String getCPF() {
+        return CPF;
+    }
 
 
-	public void corrigirCPF(String CPF) {
-		this.CPF = CPF;
-	}
-	
+    public cliente(String nome, char genero, int anoNascimento, String cPF) {
+        super(nome, genero, anoNascimento);
+        CPF = cPF;
+    }
+
+
+    public void corrigirCPF(String CPF) {
+        this.CPF = CPF;
+    }
+
 
 }
