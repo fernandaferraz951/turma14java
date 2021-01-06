@@ -34,38 +34,41 @@ public class BancoTeste {
 				String cpfConta = leia.next();
 				switch (opconta) {
 				case '1': {
-					System.out.println("Digite a data de aniversario da conta: ");
+					System.out.print("Digite a data de aniversario da conta: ");
 					int dataAniversario = leia.nextInt();
 					ContaPoupanca poupanca = new ContaPoupanca(numeroConta, cpfConta, dataAniversario);
 					contas.add(poupanca);
+					System.out.println("Numero da conta criada: " + numeroConta++);
 				}
 					break;
 
 				case '2': {
-					System.out.println("Digite a quantidade de talão de cheque");
-					int numeroTalaoCheque = leia.nextInt();
-					ContaCorrente corrente = new ContaCorrente(numeroConta, cpfConta, 3 );
+					System.out.print("Digite a quantidade de talões: ");
+					int talao = leia.nextInt();
+					
+					ContaCorrente corrente = new ContaCorrente(numeroConta, cpfConta, talao);
 					contas.add(corrente);
-					
-					System.out.println ("A quantidade total de talão: " + corrente.getTotalTalao());
-					System.out.println(corrente.getQtdTalao());
-					
+					System.out.println("Numero da conta criada: " + numeroConta++);
 				}
 					break;
 
 				case '3': {
-					System.out.println("Seu valor limite é: ");
+					System.out.print("Insira o valor do Limite do Cliente: R$ ");
 					double valorLimite = leia.nextDouble();
 					ContaEspecial especial = new ContaEspecial(numeroConta, cpfConta, valorLimite);
 					especial.registraLimite();
 					contas.add(especial);
+					System.out.println("Numero da conta criada: " + numeroConta++);
 				}
 					break;
 
 				case '4': {
-					System.out.println("O valor do seu emprestimo é: R$ 20000");
-					ContaEmpresa empresarial = new ContaEmpresa(numeroConta, cpfConta, 10000);
+					System.out.print("Insira o valor do emprestimo disponivel: R$ ");
+					double valorEmprestimo = leia.nextDouble();
+					ContaEmpresa empresarial = new ContaEmpresa(numeroConta, cpfConta, valorEmprestimo);
 					contas.add(empresarial);
+					System.out.println("Numero da conta criada: " + numeroConta++);
+				
 				}
 					break;
 
@@ -120,7 +123,7 @@ public class BancoTeste {
 	private static void menuContaEspecial(ContaEspecial conta) {
 		for (int i = 0; i < 10; i++) {
 			System.out.println();
-			System.out.println("Conta Especial");
+			System.out.println("Conta Especial Nº " + conta.getNumeroConta());
 			System.out.println("Digite a opção de transação");
 			System.out.println("1 - Movimentação ");
 			System.out.println("2 - Saldo ");
@@ -161,36 +164,13 @@ public class BancoTeste {
 				System.out.println("Encerrando acesso a conta");
 				return;
 			}
-			
-
-
-			/*System.out.println("\n1 - Movimento");
-			System.out.println("2 - Saldo");
-			System.out.println("3 - Alterar Limite");
-			System.out.println("0 - Sair");
-			System.out.println();
-			System.out.println("Digite a opção:");
-			int opcao = leia.nextInt();
-			if (opcao == 1) {
-				menuMovimento(conta);
-			} else if(opcao == 2) {
-				System.out.printf("\nSaldo Atual: R$ %.2f", conta.getSaldo());
-			} else if (opcao == 3) {
-				System.out.println("\nDigite o valor do limite a ser alterado: ");
-				double limite = leia.nextDouble();
-				conta.setValorLimite(limite);
-			} else {
-				return;
-			
-			
-			
-			
-			}*/
 		}
 	}
 
 	private static void menuContaCorrente(ContaCorrente conta) {
 		for (int i = 0; i < 10; i++) {
+			System.out.println();
+			System.out.println("Conta Corrente Nº " + conta.getNumeroConta());
 			System.out.println("\n1 - Movimento");
 			System.out.println("2 - Saldo");
 			System.out.println("3 - Talão de cheque");
@@ -203,19 +183,21 @@ public class BancoTeste {
 			} else if (opcao == 2) {
 				System.out.printf("\nSaldo Atual: R$ %.2f", conta.getSaldo());
 			} else if (opcao == 3) {
-				System.out.println("\nDigite a quantidade de talão: ");
-				conta.setQtdTalao (leia.nextInt());
-				System.out.println("Total de talões disponiveis: " + conta.getTotalTalao());
-				int totalTalao = leia.nextInt();
+				
+				conta.talao(conta.getTalao() , conta.getTotalTalao());
+				
+				//int totalTalao = leia.nextInt();
 				//conta.talao(talao, totalTalao);
-			} else 
+			} else {
 				return;
 			}
 		}
-
+	}
 
 	private static void menuContaPoupanca(ContaPoupanca conta) {
 		for (int i = 0; i < 10; i++) {
+			System.out.println();
+			System.out.println("Conta Poupança Nº " + conta.getNumeroConta());
 			System.out.println("\n1 - Movimento");
 			System.out.println("2 - Saldo");
 			System.out.println("3 - Aniversário");
@@ -240,6 +222,8 @@ public class BancoTeste {
 
 	private static void menuContaEmpresarial(ContaEmpresa conta) {
 		for (int i = 0; i < 10; i++) {
+			System.out.println();
+			System.out.println("Conta Empresa Nº " + conta.getNumeroConta());
 			System.out.println("\n1 - Movimento");
 			System.out.println("2 - Saldo");
 			System.out.println("3 - Empréstimo");

@@ -1,38 +1,33 @@
 package bancooficial;
 
-public class ContaPoupanca  extends Conta 
-{
-	//atributo
+public class ContaPoupanca extends Conta{
+	
 	private int dataAniversarioConta;
+
 	
 	
-	//construtor
-	public ContaPoupanca(int numeroConta, String cpf, int dataAniversarioConta) {
+	//Contrutor
+	public ContaPoupanca(int numeroConta, String cpf, int dataAniversario) {
 		super(numeroConta, cpf);
-		this.dataAniversarioConta = dataAniversarioConta;
+		this.dataAniversarioConta = dataAniversario;
 	}
 	
 	
-	//ENCAPSULAMENTO - GETTER AND SETTERS
-	
-	public int getDataAniversarioConta() {
+	//Get Set - encapsulamento
+	public int getdataAniversarioConta() {
 		return dataAniversarioConta;
 	}
 
-	
-
-	public void setDataAniversarioConta(int dataAniversarioConta) {
-		this.dataAniversarioConta = dataAniversarioConta;
-	}
-	
+		
 	public void correcaoPoupanca(int dataAtual) {
 		
 		if (dataAtual == this.dataAniversarioConta) {
-			super.credito((super.getSaldo()*0.005));
-			
-			
-			
+			super.credito(super.getSaldo()*0.005);
+			System.out.println("Houve correção no valor da conta");
+		}else {
+			System.out.println("Não houve correção no valor da conta");
 		}
 	}
+	
 	
 }
