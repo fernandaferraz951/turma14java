@@ -1,379 +1,263 @@
 package bancooficial;
 
-
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BancoMenu {
 
-	public static final int TOTAL_CLIENTE = 40;
-	public static int contaDigitada;
-	public static int conta [] = new int [TOTAL_CLIENTE];
-	public static String clientes[] = {"Allen de Lima Vieira", "André de Brito Silva da Costa","Bárbara Liboni Guerra",	
-			"Beatriz Martins","Beymar Jhoel Acapa Lima","Breno Nogueira Botelho Noccioli",
-			"Daniel Augusto Gomes Ferreira Filho","Danilo Mendes Ferreira","Danilo Pereira da Silva",
-			"Davi Silva Vieira","Diego Vinicio da Silva Nascimento","Erick Costa Ferreira",
-			"Ewerton Inacio Lima","FERNANDA AGAPITO","Fernanda Barbosa Ferraz","Francisco José Pires",
-			"Gabriel Sérgio Nascimento Santos Gonçalves", "Gideão da Silva Idelfonso",
-			"GILSON AMORIM DE MATOS","Guilherme Gonçalves da Silva","Gustavo Rabelo Teles",
-			"HELOISA BEATRIZ DE OLIVEIRA COSTA","Igor Mateus Queiroz Gato","Isabel Emiko Yamakawa Oyama",
-			"Jackeline Akemi de Moura","José Jorge Hauck Júnior","Juliana Santos André",
-			"Kélven Cleiton de Araújo Brandão","Laís Lima Santos","Lucas anseloni barros",
-			"Lucas Gonçalves da SIlva","luis felipe da silva","Luiz Felipe da Silva Magalhães",
-			"Marcos Eduardo Gomes Gonçalves","Micaely da Silva Lima","Rafaela Oliveira Silva",
-			"Tiago dos Santos Martins","Verônica Navarro Almenara","Vinicius Alves Miranda", "Gabriel Enrique Cabral Silva"};
-	public static char genero [] = {'M','M','F','F','M','M','M','M','M','M','M','M','M','F','F','M','M','M','M','M','M','M','F','M','F','F','M',
-			'F','M','F','M','M','M','M','M','F','F','M','F','M','M'};
-	public static int tipo[] = new int[4];
-	public static double valor[] = new double[4];
-	public static String nome;
 	public static Scanner leia = new Scanner(System.in);
-	public static int talao[]= new int [3];
+
 	public static void main(String[] args) {
-		
-		int menu;
-		
-		digitarConta(); 
-		inicializarContas();
-		
-		linha(50);
-		saudacao();
-		linha(50);
-			
+
+		char op;// visivel em todo o programa - escopo
+		char saida;
+		int numeroConta = 0; // escopo global
+		List<Conta> contas = new ArrayList<>();
+
+		System.out.println("BANCO G2Bank");
 		do {
-			System.out.println("Digite a opção de conta");
-			System.out.println("1 - Conta Poupança ");
-			System.out.println("2 - Conta Corrente ");
-			System.out.println("3 - Conta Especial ");
-			System.out.println("4 - Conta Empresarial ");
-			System.out.println("5 - Conta Universitária ");
-			System.out.println("6 - Extrato Consolidado ");
-			System.out.println("0 - Sair ");
-			menu = leia.nextInt();
-
-			if (menu == 1) {
-				contaPoupanca();
-			} else if (menu == 2) {
-				contaCorrente();
-			} else if (menu == 3) {
-				contaEspecial();
-			} else if (menu == 4) {
-				contaEmpresarial();
-			} else if (menu == 5) {
-				contaUniversitaria();
-			} else if (menu == 6) {
-				// função extrato
-			} else if (menu == 0) {
-				System.out.println("Encerrando acesso a conta");
-				System.exit(0);
-			}
-
-		} while (menu != 0);
-	}
-
-	public static void contaPoupanca() {
-		double saldo = 0.0, credito = 0.0, debito = 0.0;
-		int opcao;
-		char continuar;
-		Scanner entrada = new Scanner(System.in);
-
-		do {
-			for (int transacao = 0; transacao < 10; transacao++) {
-				System.out.println("Digite a opção de transação");
-				System.out.println("1 - Crédito ");
-				System.out.println("2 - Débito ");
-				System.out.println("3 - Saldo ");
-				System.out.println("0 - Sair");
-				opcao = entrada.nextInt();
-
-				if (opcao == 1) {
-					System.out.println("Digite o valor a ser creditado");
-					credito = entrada.nextDouble();
-					saldo = saldo + credito;
-					mostrarSaldo(saldo);
-				} else if (opcao == 2) {
-					if (saldo <= 0.0) {
-						System.out.println("Não é possível realizar o saque!");
-					} else if (saldo >= debito) {
-						System.out.println("Digite o valor a ser debitado");
-						debito = entrada.nextDouble();
-						saldo -= debito;
-						if (saldo < 0) {
-							System.out.println(
-									"Não é possível realizar este débito. O saldo final não pode ser negativo");
-							saldo = saldo + debito;
-						}
-						mostrarSaldo(saldo);
-					}
-				} else if (opcao == 3) {
-					System.out.println("Saldo: R$ " + saldo);
-				} else if (opcao == 0) {
-					System.out.println("Encerrando acesso a conta");
-					System.exit(0);
+			System.out.println("1 - Abertura de conta ");
+			System.out.println("2 - Acesso a uma conta existente ");
+			System.out.println("3 - Sair ");
+			op = leia.next().charAt(0);
+			if (op == '1') {
+				System.out.println("1 - Conta Poupança");
+				System.out.println("2 - Conta Corrente");
+				System.out.println("3 - Conta Especial");
+				System.out.println("4 - Conta Empresa");
+				System.out.print("Digite o numero de sua opção: ");
+				char opconta = leia.next().charAt(0);
+				numeroConta++;
+				System.out.print("Digite o seu CPF: ");
+				String cpfConta = leia.next();
+				switch (opconta) {
+				case '1': {
+					System.out.print("Digite a data de aniversario da conta: ");
+					int dataAniversario = leia.nextInt();
+					ContaPoupanca poupanca = new ContaPoupanca(numeroConta, cpfConta, dataAniversario);
+					contas.add(poupanca);
+					System.out.println("Numero da conta criada: " + numeroConta);
 				}
+					break;
 
-			}
-			System.out
-					.println("Você realizou todas as possíveis transações em Conta Poupança, deseja continuar? (S/N)");
-			continuar = entrada.next().toUpperCase().charAt(0);
-		} while (continuar == 'S');
+				case '2': {
+					System.out.print("Digite a quantidade de talão de cheque: ");
+					int numeroTalaoCheque = leia.nextInt();
+					ContaCorrente corrente = new ContaCorrente(numeroConta, cpfConta, 3);
+					contas.add(corrente);
+					System.out.println("Numero da conta criada: " + numeroConta);
+				}
+					break;
 
-	}
+				case '3': {
+					System.out.print("Insira o valor do Limite do Cliente: R$ ");
+					double valorLimite = leia.nextDouble();
+					ContaEspecial especial = new ContaEspecial(numeroConta, cpfConta, valorLimite);
+					especial.registraLimite();
+					contas.add(especial);
+					System.out.println("Numero da conta criada: " + numeroConta);
+				}
+					break;
 
-	public static void contaCorrente() {
-		Random sorteia = new Random();
-		double saldo = 0.0, credito = 0.0, debito = 0.0;
-		int opcao;
-		char continuar, escolheDebitoCredito;
-		Scanner entrada = new Scanner(System.in);
-		int numeroTalao=sorteia.nextInt(258) ,alteraNumero=sorteia.nextInt(252);
-
-		do {
-
-			for (int transacao = 0; transacao < 10; transacao++) {
-				System.out.println("Digite a opção de transação");
-				System.out.println("1 - Crédito ");
-				System.out.println("2 - Débito ");
-				System.out.println("3 - Saldo ");
-				System.out.println("4 - Solicitar talão ");
-				System.out.println("5 - Alterar número do talão ");
-				System.out.println("0 - Sair ");
+				case '4': {
+					System.out.print("Insira o valor do emprestimo disponivel: R$ ");
+					double valorEmprestimo = leia.nextDouble();
+					ContaEmpresa empresarial = new ContaEmpresa(numeroConta, cpfConta, valorEmprestimo);
+					contas.add(empresarial);
+					System.out.println("Numero da conta criada: " + numeroConta);
 				
-				
-				opcao = entrada.nextInt();
-
-				if (opcao == 1) {
-					System.out.println("Digite o valor a ser creditado");
-					credito = entrada.nextDouble();
-					saldo = saldo + credito;
-					mostrarSaldo(saldo);
-				} else if (opcao == 2) {
-					if (saldo <= 0.0) {
-						System.out.println("Não é possível realizar o saque!");
-					} else if (saldo >= debito) {
-						System.out.println("Digite o valor a ser debitado");
-						debito = entrada.nextDouble();
-						saldo -= debito;
-						if(saldo < 0) {
-							System.out.println("Não é possível realizar este débito. O saldo final não pode ser negativo");
-							saldo = saldo + debito;
-						}
-						mostrarSaldo(saldo);
-					}
-				} else if (opcao == 3) {
-					System.out.println("Saldo: R$ " + saldo);
-				}else if (opcao==4) {
-					System.out.println("solicitar um novo talão, numero do talão é: " + numeroTalao);
-					
-				} else if (opcao==5) {
-					System.out.println("Alterado o número para: " + alteraNumero);
 				}
-				
-				else if (opcao == 0) {
-					System.out.println("Encerrando acesso a conta");
-					System.exit(0);
+					break;
 				}
 
-			}
-			System.out
-					.println("Você realizou todas as possíveis transações em Conta Corrente, deseja continuar? (S/N)");
-			continuar = entrada.next().toUpperCase().charAt(0);
-		} while (continuar == 'S');
+			} else if (op == '2') {
+				System.out.println("Digite o numero da conta");
+				numeroConta = leia.nextInt();
+				Conta conta = null;
+				try {
+					conta = contas.get(numeroConta - 1);
 
-	}
-	public static void contaEspecial() {
-		double saldo = 0.0, credito = 0.0, debito = 0.0;
-		int opcao;
-		char continuar;
-		Scanner entrada = new Scanner(System.in);
+					saudacao(conta);
 
-		do {
-			for (int transacao = 0; transacao < 10; transacao++) {
-				System.out.println("Digite a opção de transação");
-				System.out.println("1 - Crédito ");
-				System.out.println("2 - Débito ");
-				System.out.println("3 - Saldo ");
-				System.out.println("0 - Sair");
-				opcao = entrada.nextInt();
+					if (conta instanceof ContaEspecial) {
+						menuContaEspecial((ContaEspecial) conta);
+					} else if (conta instanceof ContaPoupanca) {
+						menuContaPoupanca((ContaPoupanca) conta);
+					} else if (conta instanceof ContaEmpresa) {
+						menuContaEmpresarial((ContaEmpresa) conta);
+					} else if (conta instanceof ContaCorrente) {
+						menuContaCorrente((ContaCorrente) conta);
+					} 
 
-				if (opcao == 1) {
-					System.out.println("Digite o valor a ser creditado");
-					credito = entrada.nextDouble();
-					saldo = saldo + credito;
-					mostrarSaldo(saldo);
-				} else if (opcao == 2) {
-					if (saldo <= 0.0) {
-						System.out.println("Não é possível realizar o saque!");
-					} else if (saldo >= debito) {
-						System.out.println("Digite o valor a ser debitado");
-						debito = entrada.nextDouble();
-						saldo -= debito;
-						if (saldo < 0) {
-							System.out.println(
-									"Não é possível realizar este débito. O saldo final não pode ser negativo");
-							saldo = saldo + debito;
-						}
-						mostrarSaldo(saldo);
-					}
-				} else if (opcao == 3) {
-					System.out.println("Saldo: R$ " + saldo);
-				} else if (opcao == 0) {
-					System.out.println("Encerrando acesso a conta");
-					System.exit(0);
+				} catch (Exception e) {
+					System.out.println("Conta não encontrada!");
 				}
-
-			}
-			System.out
-					.println("Você realizou todas as possíveis transações em Conta Especial, deseja continuar? (S/N)");
-			continuar = entrada.next().toUpperCase().charAt(0);
-		} while (continuar == 'S');
-
-	}
-
-	public static void contaEmpresarial() {
-		double saldo = 0.0, credito = 0.0, debito = 0.0;
-		int opcao;
-		char continuar;
-		Scanner entrada = new Scanner(System.in);
-
-		do {
-			for (int transacao = 0; transacao < 10; transacao++) {
-				System.out.println("Digite a opção de transação");
-				System.out.println("1 - Crédito ");
-				System.out.println("2 - Débito ");
-				System.out.println("3 - Saldo ");
-				System.out.println("0 - Sair");
-				opcao = entrada.nextInt();
-
-				if (opcao == 1) {
-					System.out.println("Digite o valor a ser creditado");
-					credito = entrada.nextDouble();
-					saldo = saldo + credito;
-					mostrarSaldo(saldo);
-				} else if (opcao == 2) {
-					if (saldo <= 0.0) {
-						System.out.println("Não é possível realizar o saque!");
-					} else if (saldo >= debito) {
-						System.out.println("Digite o valor a ser debitado");
-						debito = entrada.nextDouble();
-						saldo -= debito;
-						if (saldo < 0) {
-							System.out.println(
-									"Não é possível realizar este débito. O saldo final não pode ser negativo");
-							saldo = saldo + debito;
-						}
-						mostrarSaldo(saldo);
-					}
-				} else if (opcao == 3) {
-					System.out.println("Saldo: R$ " + saldo);
-				} else if (opcao == 0) {
-					System.out.println("Encerrando acesso a conta");
-					System.exit(0);
-				}
-
-			}
-			System.out.println(
-					"Você realizou todas as possíveis transações em Conta Empresarial, deseja continuar? (S/N)");
-			continuar = entrada.next().toUpperCase().charAt(0);
-		} while (continuar == 'S');
-
-	}
-
-	public static void contaUniversitaria() {
-		double saldo = 0.0, credito = 0.0, debito = 0.0;
-		int opcao;
-		char continuar;
-		Scanner entrada = new Scanner(System.in);
-
-		do {
-			for (int transacao = 0; transacao < 10; transacao++) {
-				System.out.println("Digite a opção de transação");
-				System.out.println("1 - Crédito ");
-				System.out.println("2 - Débito ");
-				System.out.println("3 - Saldo ");
-				System.out.println("0 - Sair");
-				opcao = entrada.nextInt();
-
-				if (opcao == 1) {
-					System.out.println("Digite o valor a ser creditado");
-					credito = entrada.nextDouble();
-					saldo = saldo + credito;
-				} else if (opcao == 2) {
-					if (saldo <= 0.0) {
-						System.out.println("Não é possível realizar o saque!");
-					} else if (saldo >= debito) {
-						System.out.println("Digite o valor a ser debitado");
-						debito = entrada.nextDouble();
-						saldo -= debito;
-						if (saldo < 0) {
-							System.out.println(
-									"Não é possível realizar este débito. O saldo final não pode ser negativo");
-							saldo = saldo + debito;
-						}
-						mostrarSaldo(saldo);
-					}
-				} else if (opcao == 3) {
-					System.out.println("Saldo: R$ " + saldo);
-				} else if (opcao == 0) {
-					System.out.println("Encerrando acesso a conta");
-					System.exit(0);
-				}
-
-			}
-			System.out.println(
-					"Você realizou todas as possíveis transações em Conta Universitaria, deseja continuar? (S/N)");
-			continuar = entrada.next().toUpperCase().charAt(0);
-		} while (continuar == 'S');
-
-	}
-
-	public static void linha(int tamanho) {
-		for (int x = 0; x < tamanho; x++) {
-			System.out.print("-");
-		}
-		System.out.println();
-	}
-
-	public static void mostrarSaldo(Double saldo) {
-		System.out.println("Saldo: R$ " + saldo);
-	}
-
-	public static String opcaoGenero(char genero) {
-		if (genero == 'M') {
-			return "AAA";
-		} else if (genero == 'F') {
-			return "BBB";
-		} else {
-			return "CCC";
-		}
-	}
-	
-	private static void digitarConta() {
-		while (true) {
-			System.out.println("Digite o número da sua conta: ");
-			contaDigitada = leia.nextInt();
-			if (contaDigitada < 1 || contaDigitada > TOTAL_CLIENTE + 1) {
-				System.out.println("Você não possui uma conta no banco");
 			} else {
-				contaDigitada -= 1;
+
+			}
+			System.out.println("Continua S/N");
+			saida = leia.next().toUpperCase().charAt(0);
+			if (saida == 'N') {
 				break;
 			}
+
+		} while (true);
+
+	}
+
+
+	private static void saudacao(Conta conta) {
+		System.out.println("Seja bem vindo ao G2Bank!");
+		System.out.printf("\nCPF: %s", conta.getCpf());
+		System.out.printf("\nSeu saldo atual é de R$ %.2f", conta.getSaldo());
+	}
+
+	private static void menuContaEspecial(ContaEspecial conta) {
+		for (int i = 0; i < 10; i++) {
+			System.out.println();
+			System.out.println("Conta Especial Nº " + conta.getNumeroConta());
+			System.out.println("Digite a opção de transação");
+			System.out.println("1 - Movimentação ");
+			System.out.println("2 - Saldo ");
+			System.out.println("0 - Sair");
+			int opcao = leia.nextInt();
+			if (opcao == 1) {
+				System.out.printf("Saldo: R$ %.2f%n", conta.getSaldo());
+				System.out.printf("Valor do Limite: R$ %.2f%n", conta.getValorLimite());
+				System.out.printf("Limite Usado: R$ %.2f%n", (conta.getValorCadastroLimite() - conta.getValorLimite()));
+				System.out.println("Digite a opção de transação");
+				System.out.println("1 - Crédito ");
+				System.out.println("2 - Débito ");
+				System.out.println("0 - Sair");
+				opcao = leia.nextInt();
+						if(opcao == 1) {
+							System.out.println("Digite o valor a ser creditado");
+							conta.devolverLimite(leia.nextDouble());
+							System.out.printf("Saldo: R$ %.2f%n", conta.getSaldo());
+							System.out.printf("Valor do Limite: R$ %.2f%n", conta.getValorLimite());
+							System.out.printf("Limite Usado: R$ %.2f%n",(conta.getValorCadastroLimite() - conta.getValorLimite()));
+						}
+						else if(opcao == 2) {
+							System.out.println("Digite o valor a ser debitado");
+							conta.debito(leia.nextDouble()); 
+							System.out.printf("Saldo: R$ %.2f%n", conta.getSaldo());
+							System.out.printf("Valor do Limite: R$ %.2f%n", conta.getValorLimite());
+							System.out.printf("Limite Usado: R$ %.2f%n",(conta.getValorCadastroLimite() - conta.getValorLimite()));	
+						}
+						else if (opcao == 0) {
+							return;
+						}
+			}
+			else if (opcao == 2) {
+				System.out.printf("Saldo: R$ %.2f%n", conta.getSaldo());
+				System.out.printf("Valor do Limite: R$ %.2f%n", conta.getValorLimite());
+			} 
+			else if (opcao == 0) {
+				System.out.println("Encerrando acesso a conta");
+				return;
+			}
 		}
 	}
-	
-	public static void saudacao() {
-		if (genero[contaDigitada] == 'M') {
-			System.out.println("Bem vindo ao Banco G2! Sr. " + clientes[contaDigitada]);
-		} else if (genero[contaDigitada] == 'F') {
-			System.out.println("Bem vinda ao Banco G2! Sra. " + clientes[contaDigitada]);
-		} else {
-			System.out.println("Bem vindo(a) ao Banco G2! Sr(a). " + clientes[contaDigitada]);
+
+	private static void menuContaCorrente(ContaCorrente conta) {
+		for (int i = 0; i < 10; i++) {
+			System.out.println();
+			System.out.println("Conta Corrente Nº " + conta.getNumeroConta());
+			System.out.println("\n1 - Movimento");
+			System.out.println("2 - Saldo");
+			System.out.println("3 - Talão de cheque");
+			System.out.println("0 - Sair");
+			System.out.println();
+			System.out.println("Digite a opção:");
+			int opcao = leia.nextInt();
+			if (opcao == 1) {
+				menuMovimento(conta);
+			} else if (opcao == 2) {
+				System.out.printf("\nSaldo Atual: R$ %.2f", conta.getSaldo());
+			} else if (opcao == 3) {
+				
+				conta.talao(conta.getTalao() , conta.getTotalTalao());
+			} else {
+				return;
+			}
+		}
+	}	
+
+	private static void menuContaPoupanca(ContaPoupanca conta) {
+		for (int i = 0; i < 10; i++) {
+			System.out.println();
+			System.out.println("Conta Poupança Nº " + conta.getNumeroConta());
+			System.out.println("\n1 - Movimento");
+			System.out.println("2 - Saldo");
+			System.out.println("3 - Aniversário");
+			System.out.println("0 - Sair");
+			System.out.println();
+			System.out.println("Digite a opção:");
+			int opcao = leia.nextInt();
+			if (opcao == 1) {
+				menuMovimento(conta);
+			} else if (opcao == 2) {
+				System.out.printf("\nSaldo Atual: R$ %.2f", conta.getSaldo());
+			} else if (opcao == 3) {
+				System.out.println("\nDigite a data de hoje");
+				int data = leia.nextInt();
+				conta.correcaoPoupanca(data);
+				System.out.printf("\nSaldo atual: R$ %.2f", conta.getSaldo());
+			} else {
+				return;
+			}
 		}
 	}
-	
-	private static void inicializarContas() {
-		for (int i = 0; i < TOTAL_CLIENTE; i++) {
-			conta[i] = i;
+
+	private static void menuContaEmpresarial(ContaEmpresa conta) {
+		for (int i = 0; i < 10; i++) {
+			System.out.println();
+			System.out.println("Conta Empresa Nº " + conta.getNumeroConta());
+			System.out.println("\n1 - Movimento");
+			System.out.println("2 - Saldo");
+			System.out.println("3 - Empréstimo");
+			System.out.println("0 - Sair");
+			System.out.println();
+			System.out.println("Digite a opção:");
+			int opcao = leia.nextInt();
+			if (opcao == 1) {
+				menuMovimento(conta);
+			} else if (opcao == 2) {
+				conta.mostrarSaldos();
+			} else if (opcao == 3) {
+				conta.perguntarEmprestimo();
+			} else {
+				return;
+			}
+		}
+	}
+
+	private static void menuMovimento(Conta conta) {
+		for (int i = 0; i < 10; i++) {
+			System.out.println("\nMovimento");
+			System.out.println("1 - Crédito");
+			System.out.println("2 - Débito");
+			System.out.println("0 - Sair");
+			int opcaoMovimento = leia.nextInt();
+			if (opcaoMovimento == 1) {
+				System.out.print("\nQuanto deseja creditar: ");
+				double valorCredito = leia.nextDouble();
+				conta.credito(valorCredito);
+				System.out.printf("Saldo atual: R$ %.2f", conta.getSaldo());
+			} else if (opcaoMovimento == 2) {
+				System.out.print("\nQuanto deseja debitar: ");
+				double valorDebito = leia.nextDouble();
+				if (conta.testarSaldo(valorDebito)) {
+					conta.debito(valorDebito);
+				} else {
+					System.out.println("Valor Solicitado é maior que o saldo e valor de emprestimo disponivel");
+				}
+				System.out.printf("Saldo atual: R$ %.2f", conta.getSaldo());
+			} else {
+				System.out.println("Saindo da movimentação...");
+				break;
+			}
 		}
 	}
 
